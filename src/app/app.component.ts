@@ -8,41 +8,104 @@ import { FormsModule } from "@angular/forms";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  x: number;
-  i: number;
-  b = [];
-  a = [1, 2, 4, 8, 16, 32, 64, 127];
-  y: number;
-  j: number = 0;
-  c = [false, false, false, false, false, false, false,];
-  correct: boolean = true;
-  findDigit(e): any {
-    this.x = e.digit;
-    this.j = 0;
-    if (this.x == 127) {
-      this.c = [true, true, true, true, true, true, true];
+  list = [
+    {
+      value: 1,
+      flag: false
+    },
+    {
+      value: 2,
+      flag: false
+    },
+    {
+      value: 4,
+      flag: false
+    },
+    {
+      value: 8,
+      flag: false
+    },
+    {
+      value: 16,
+      flag: false
+    },
+    {
+      value: 32,
+      flag: false
+    },
+    {
+      value: 64,
+      flag: false
+    }
+  ]
+  enterNum: number;
+  lsitedNumber = [];
+  focusFunction() {
+    this.setFlag('false');
+  }
+  submitNum() {
+    if (this.enterNum == 127) {
+      this.setFlag('all');
     }
     else {
-      if (this.x > 0 && this.x < 127) {
-        for (this.i = 0; this.i < this.a.length; this.i++) {
-          if (this.x < this.a[this.i]) {
-            this.y = this.a[this.i - 1];
-            this.x = this.x - this.a[this.i - 1];
-            this.i = 0;
-            this.b[this.j++] = this.y;
-          }
-          if (this.x == this.a[this.i]) {
-            this.b[this.j++] = this.x;
-          }
+      let num = 0;
+      if (this.enterNum > 0 && this.enterNum < 127) {
+        for (let i = 0; i < this.list.length; i++) {
+          num = this.checkNumber(this.enterNum);
+          this.enterNum = num;
         }
-      }
-      for (this.i = 0; this.i < this.b.length; this.i++) {
-        for (this.j = 0; this.j < this.a.length; this.j++) {
-          if (this.b[this.i] == this.a[this.j]) {
-            this.c[this.j] = true;
-          }
-        }
+      } else {
+        alert("Enter numbers between 0 to 127!");
       }
     }
   }
+  setFlag(index) {
+    if (index == 'all') {
+      for (let i = 0; i < this.list.length; i++) {
+        this.list[i].flag = true;
+      }
+    } else if (index == 'false') {
+      for (let i = 0; i < this.list.length; i++) {
+        this.list[i].flag = false;
+      }
+    } else {
+      this.list[index].flag = true;
+    }
+
+  }
+  checkNumber(number) {
+    switch (true) {
+      case number >= 64:
+        this.setFlag(6);
+        return number - 64;
+
+
+      case number >= 32 && number < 64:
+        this.setFlag(5);
+        return number - 32;
+
+      case number >= 16 && number < 33:
+        this.setFlag(4);
+        return number - 16;
+
+      case number >= 8 && number < 16:
+        this.setFlag(3);
+        return number - 8;
+
+      case number >= 4 && number < 8:
+        this.setFlag(2);
+        return number - 4;
+
+      case number >= 2 && number < 4:
+        this.setFlag(1);
+        return number - 2;
+
+      case number == 1:
+        this.setFlag(0);
+        return number - 1;
+
+    }
+
+  }
+
 }

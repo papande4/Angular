@@ -1,16 +1,11 @@
-<form #num="ngForm" style="margin-left:10px" (ngSubmit)="findDigit(num.value)">
-  <input [ngClass]="{'lgao':c[0]}" type="text" [(ngModel)]=a[0] name="first">
-  <input [ngClass]="{'lgao':c[1]}" type="text" [(ngModel)]=a[1] name="second">
-  <input [ngClass]="{'lgao':c[2]}" type="text" [(ngModel)]=a[2] name="third">
-  <input [ngClass]="{'lgao':c[3]}" type="text" [(ngModel)]=a[3] name="fourth">
-  <input [ngClass]="{'lgao':c[4]}" type="text" [(ngModel)]=a[4] name="fifth">
-  <input [ngClass]="{'lgao':c[5]}" type="text" [(ngModel)]=a[5] name="sixth">
-  <input [ngClass]="{'lgao':c[6]}" type="text" [(ngModel)]=a[6] name="seventh">
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <input type="text" #digit name="digit" [(ngModel)]=x>
-  <button type="submit">Enter</button>
+<form style="margin-left:10px">
+ 
+  <input *ngFor="let num of list" [ngClass]="{'lgao':num.flag}" type="text" [(ngModel)]="num.value" name="{{num.value}}">
+  <br>
+  <br>
+  <br>
+  <br>
+  <input type="text" (focus)="focusFunction()" name="digit" [(ngModel)]="enterNum">
+  <button type="submit" (click)="submitNum()">Enter</button>
 </form>
 
